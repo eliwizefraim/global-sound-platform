@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { createClient } from '@supabase/supabase-js';
+import { fileURLToPath } from 'node:url';
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
@@ -25,6 +26,10 @@ const supabase = hasSupabase
     })
   : null;
 
+app.get('/', (_req, res) => {
+  res.sendFile(fileURLToPath(new URL('./index.html', import.meta.url)));
+});
+
 app.get('/health', (_req, res) => {
   res.json({
     ok: true,
@@ -39,7 +44,7 @@ app.get('/api/v1', (_req, res) => {
     name: 'Global Sound Platform API',
     version: '1.0.0',
     modules: ['accounts', 'music', 'artists', 'community', 'arena', 'wallet', 'admin'],
-    status: 'foundation'
+    status: 'live-mvp'
   });
 });
 
