@@ -1,0 +1,8 @@
+[build]
+  publish = "frontend"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Global Sound frontend is a static site.
+# The Express server (server.js) is not deployed by this Netlify configuration.
