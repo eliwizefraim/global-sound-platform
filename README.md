@@ -1,37 +1,42 @@
 # Global Sound Platform
 
-Mobile-first music discovery and community MVP for listeners and independent artists.
+Mobile-first music discovery, community and independent-artist MVP.
 
 ## Current web MVP
 - Supabase email/password sign-up, sign-in and sign-out.
-- Browse approved public tracks and play audio using short-lived signed Storage URLs.
+- Browse approved public tracks and play audio with short-lived signed Storage URLs.
 - Read and publish community posts.
-- Responsive single-page interface served by the Express app.
+- Artist Studio: create an artist profile and submit audio for moderation.
+- Audio uploads are limited to 30 MB and require confirmation of distribution rights.
+- Express API: `GET /health`, `GET /api/v1`, and authenticated `GET /api/v1/me`.
 
-Artist upload/moderation screens, admin dashboard, payments, G.S Coins transactions, live rooms, AI music-industry assistant and Android packaging are **not yet implemented**.
-
-## Run locally
-Requirements: Node.js 20+ and a Supabase project.
-
-1. Install dependencies: `npm install`
-2. Start the server: `npm start` (or `npm run dev`).
-3. Open `http://localhost:3000`.
-4. In the Account panel, enter the Supabase Project URL and its **anon/public or publishable key**. The browser saves these two public settings locally.
-5. Create an account or sign in.
-
-The API exposes `GET /health`, `GET /api/v1`, and authenticated `GET /api/v1/me`.
+## Supabase connection
+The frontend at `frontend/index.html` is configured with the confirmed Global Sound Platform Supabase Project URL and its public publishable key. These are browser-safe public credentials. Never add a Supabase secret or service-role key to frontend code.
 
 ## Database setup
-In Supabase SQL Editor, run these files in order:
-1. [001_initial_schema.sql](./001_initial_schema.sql)
-2. [002_live_mvp.sql](./002_live_mvp.sql)
-3. [003_auth_profile_trigger.sql](./003_auth_profile_trigger.sql) — run this too to create a profile automatically after signup.
+In Supabase SQL Editor, run these migrations in order:
+1. `001_initial_schema.sql`
+2. `002_live_mvp.sql`
+3. `003_auth_profile_trigger.sql`
 
-Configure Supabase Auth for email/password sign-in and set the correct Site URL / redirect URLs for your deployed website.
+If migrations 001 and 002 have already been run, run only migration 003 next. It creates a listener profile automatically after a new Supabase Auth signup.
 
-## Deploy on Render\n1. Open Render and choose **New → Blueprint**.\n2. Connect GitHub and select `eliwizefraim/global-sound-platform`.\n3. Render reads `render.yaml`; create the web service.\n4. After deployment, open the generated HTTPS URL and check `/health` returns `{\"ok\":true}`.\n5. In Supabase → Authentication → URL Configuration, set the deployed site URL and add the deployed URL to Redirect URLs.\n6. Open the site, enter the original Platform Supabase URL and its matching public anon/publishable key in the Account panel, then test signup and login.\n\nThe browser needs the matching public key; do not use a key from a different Supabase project. Enter the exact Supabase Project URL and matching public anon/publishable key for the database where you ran migrations 001 and 002. The project URL field is intentionally blank to avoid connecting to the wrong database.\n\n## Important security notes
-- Use only the public anon/publishable key in the browser. Never put a service-role or secret key in frontend code.
-- Keep Row Level Security enabled. Review policies before public launch.
-- Coin ledger changes must be performed by trusted server-side payment workflows; never let the browser write wallet entries.
-- Only upload or distribute audio when you own or control the required rights. Public release requires trusted moderation.
-- This repository is an MVP foundation, not yet production-ready. HTTPS hosting, backups, security review, monitoring, payment verification and licensing are still required.
+Configure Supabase Authentication for email/password sign-in. After deployment, set the correct Site URL and add the deployed website URL to the Redirect URLs list.
+
+## Run locally
+Requirements: Node.js 20+.
+
+1. Install dependencies: `npm install`
+2. Start the server: `npm start`
+3. Open `http://localhost:3000`.
+
+## Deploy on Render
+1. Open Render and choose **New → Blueprint**.
+2. Connect GitHub and select `eliwizefraim/global-sound-platform`.
+3. Render reads `render.yaml`; create the web service.
+4. After deployment, open the generated HTTPS URL and check that `/health` returns `{"ok":true}`.
+5. In Supabase → Authentication → URL Configuration, set the deployed website as the Site URL and add it to Redirect URLs.
+6. Open the website and test account creation, sign-in, community posts and an artist audio submission.
+
+## Not yet production-ready
+G.S Coins payments, verified payment webhooks, live streaming, the full AI music-industry assistant, admin moderation dashboard, Android APK packaging, licensed music catalogue integration, backups, monitoring and independent security testing still require implementation and verification. Keep Row Level Security enabled and review all database/storage policies before public launch. Only upload or distribute recordings when you control the required rights.
