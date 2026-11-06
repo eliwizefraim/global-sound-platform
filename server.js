@@ -25,5 +25,5 @@ app.get('/api/v1/me', async (req, res) => {
   return res.json({ id: data.user.id, email: data.user.email });
 });
 app.use(express.static(frontendDir));
-app.get('*', (_req, res) => res.sendFile(path.join(frontendDir, 'index.html')));
+app.use((req, res, next) => { if (req.method !== 'GET' || req.path.startsWith('/api/')) return next(); return res.sendFile(path.join(frontendDir, 'index.html')); });
 app.listen(port, () => console.log(`Global Sound Platform listening on ${port}`));
