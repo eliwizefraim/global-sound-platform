@@ -96,6 +96,13 @@ input[type=file]{display:none}.muted{color:var(--muted)}.coin{color:var(--gold);
 <div id="toast" class="toast"></div>
 </div>
 <script>// GLOBAL SOUND SUPABASE CONNECTION
+const SUPABASE_URL = "https://wjamkqbtojmlqmsqwwpj.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Cvrg3JMOKEBPutbMhJcHyg_GOqxjZtS";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 const SUPABASE_URL=wjamkqbtojmlqmsqwwpj
 const SUPABASE_PUBLISHABLE_KEY =sb_publishable_Cvrg3JMOKEBPutbMhJcHyg_GOqxjZtS
 
