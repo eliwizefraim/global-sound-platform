@@ -25,6 +25,7 @@ The API exposes `GET /health`, `GET /api/v1`, and authenticated `GET /api/v1/me`
 In Supabase SQL Editor, run these files in order:
 1. [001_initial_schema.sql](./001_initial_schema.sql)
 2. [002_live_mvp.sql](./002_live_mvp.sql)
+3. [003_auth_profile_trigger.sql](./003_auth_profile_trigger.sql)
 
 Configure Supabase Auth for email/password sign-in and set the correct Site URL / redirect URLs for your deployed website.
 
